@@ -1,9 +1,10 @@
 # Transpose for 4x4 double precision matrices
-# Matrix bytes must be in rdi.
+# Matrix bytes must be in rdi and aligned to 32 bytes!
 
 transpose_unpack_4x4:
     pushq %rbp
     movq %rsp, %rbp
+
     vmovapd 00(%rdi), %ymm0
     vmovapd 32(%rdi), %ymm1 
     vmovapd 64(%rdi), %ymm2
@@ -20,12 +21,15 @@ transpose_unpack_4x4:
     vmovapd %ymm1, 32(%rdi) 
     vmovapd %ymm2, 64(%rdi)
     vmovapd %ymm3, 96(%rdi)
+    
     movq %rbp, %rsp
     popq %rbp
+    retq
 
 transpose_shuffle_4x4:
     pushq %rbp
     movq %rsp, %rbp
+
     vmovapd 00(%rdi), %ymm0
     vmovapd 32(%rdi), %ymm1 
     vmovapd 64(%rdi), %ymm2
@@ -42,5 +46,7 @@ transpose_shuffle_4x4:
     vmovapd %ymm1, 32(%rdi) 
     vmovapd %ymm2, 64(%rdi)
     vmovapd %ymm3, 96(%rdi)
+
     movq %rbp, %rsp
     popq %rbp
+    retq
