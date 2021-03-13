@@ -3,14 +3,7 @@ pipeline {
     stages {
       stage('assemble') {
         steps {
-            sh 
-            """
-            for file in /src/*.asm
-            do
-                as "$file"
-            done
-            """
-            sh 'rm src/a.out'
+          sh 'as src/transpose.asm && rm a.out'
         }
       }
     }
